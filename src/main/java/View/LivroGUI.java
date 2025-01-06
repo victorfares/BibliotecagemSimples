@@ -4,6 +4,7 @@
  */
 package View;
 import Model.Livro;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -164,6 +165,7 @@ public class LivroGUI extends javax.swing.JFrame {
         livro.setEdicao(Integer.parseInt(textEd.getText()));
         livro.setEditora(textEditora.getText());
         livro.setAlugado(false);
+        JOptionPane.showMessageDialog(null, "Livro cadastrado", "Cadastro de livros", JOptionPane.INFORMATION_MESSAGE);
         //LivroDao dao - new Liv//roDao;
         //dao.inserir(livro);
     }//GEN-LAST:event_btCadastroActionPerformed
