@@ -8,9 +8,6 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class ConexaoBD {
-    
-
-    
     static Connection conn = null;
     static String url = "jdbc:mysql://localhost:3306/mydb";
     static String driver = "com.mysql.cj.jdbc.Driver";

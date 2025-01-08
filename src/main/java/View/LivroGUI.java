@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
+import Controller.LivroDAO;
 import Model.Livro;
 import javax.swing.JOptionPane;
 
@@ -13,9 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class LivroGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AlunoGUI
-     */
+    
     public LivroGUI() {
         initComponents();
     }
@@ -169,6 +168,7 @@ public class LivroGUI extends javax.swing.JFrame {
 
     private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
         Livro livro = new Livro();
+        LivroDAO ld = new LivroDAO();
         livro.setNome(textNome.getText());
         livro.setId(Integer.parseInt(textId.getText()));
         livro.setAnoLancamento(Integer.parseInt(textLanc.getText()));
@@ -177,6 +177,10 @@ public class LivroGUI extends javax.swing.JFrame {
         livro.setEdicao(Integer.parseInt(textEd.getText()));
         livro.setEditora(textEditora.getText());
         livro.setAlugado(false);
+        
+        ld.inserir(livro);
+        
+        
         JOptionPane.showMessageDialog(
                 null, "Livro cadastrado", "Cadastro de livros", JOptionPane.INFORMATION_MESSAGE);
         //LivroDao dao - new Liv//roDao;
