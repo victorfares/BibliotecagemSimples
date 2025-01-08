@@ -4,6 +4,7 @@
  */
 package View;
 import Model.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,6 +33,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         textNome = new javax.swing.JTextField();
         textRg = new javax.swing.JTextField();
         btCadastrar = new javax.swing.JButton();
+        btLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,6 +45,13 @@ public class UsuarioGUI extends javax.swing.JFrame {
         btCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastrarActionPerformed(evt);
+            }
+        });
+
+        btLimpar.setText("Limpar");
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
             }
         });
 
@@ -62,7 +71,9 @@ public class UsuarioGUI extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53)
-                .addComponent(btCadastrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btCadastrar)
+                    .addComponent(btLimpar))
                 .addContainerGap(101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -80,8 +91,10 @@ public class UsuarioGUI extends javax.swing.JFrame {
                             .addComponent(textRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(btCadastrar)))
-                .addContainerGap(196, Short.MAX_VALUE))
+                        .addComponent(btCadastrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btLimpar)))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
 
         pack();
@@ -89,9 +102,24 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         Usuario usuario = new Usuario();
+        usuario.setNome(textNome.getText());
+        usuario.setRg(Integer.parseInt(textRg.getText()));
+        JOptionPane.showMessageDialog(
+                null, "Usuario Cadastrado", "Cadastro de Usuarios", JOptionPane.INFORMATION_MESSAGE);
+        limpar();
         
     }//GEN-LAST:event_btCadastrarActionPerformed
 
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        limpar();
+    }//GEN-LAST:event_btLimparActionPerformed
+
+    public void limpar(){
+        textNome.setText("");
+        textRg.setText("");
+        textNome.requestFocus();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -129,6 +157,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
+    private javax.swing.JButton btLimpar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField textNome;
