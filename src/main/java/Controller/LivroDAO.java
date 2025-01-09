@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 
 
@@ -21,47 +22,54 @@ public class LivroDAO {
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
     static String senha = "2004Gu$tavo";
-    /*
-        public Livro buscarLivroPorId(int id) {
+    
+    public boolean buscarL(int id) {
         Livro livro = null;
-        String sql = "SELECT * FROM livros WHERE id = ?";
+        String sql3 = "SELECT * FROM livro WHERE Liv_id = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, user, senha);
-             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        try{
+            conn = DriverManager.getConnection(url, user, senha);
+            PreparedStatement ps = conn.prepareStatement(sql3);
 
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                int livroId = rs.getInt("id");
-                String titulo = rs.getString("titulo");
-                String autor = rs.getString("autor");
-
-                livro = new Livro(livroId, titulo, autor);
+                System.out.println("Nome do Livro ="+rs.getString(2));
+                ps.close();
+                rs.close();
+                conn.close();
+                return true;
+                
+            }else{
+                System.out.println("Livro nao encontrado");
+                ps.close();
+                rs.close();
+                conn.close();            
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception ex) {
+            System.out.println(ex);
         }
 
-        return livro;
+        return false;
     }
-    */
+    
     
     
 
-    public void inserir(Livro livro){
+    public void inserirL(Livro livro){
         Statement st = null;
         PreparedStatement ps = null;
         
        
-        String sql = "INSERT INTO Livro (id, nome, anoLancamento, genero, autor, edicao, editora, alugado) "
+        String sql1 = "INSERT INTO Livro (Liv_id, Liv_nome, Liv_anoLancamento, Liv_genero, Liv_autor, Liv_edicao, Liv_editora, Liv_alugado) "
            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try{
             Class.forName(driver);
             conn = DriverManager.getConnection(url,user,senha);
             System.out.println("Inserindo dados...");
             
-            ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql1);
             ps.setInt(1, livro.getId());
             ps.setString(2, livro.getNome());
             ps.setInt(3, livro.getAnoLancamento());
@@ -79,8 +87,34 @@ public class LivroDAO {
         }catch(Exception ex){
             System.out.println(ex);
         }
-
-
+    }
+    
+    public void excluirL(int id){
+        Statement st = null;
+        PreparedStatement ps = null;
         
-}
+        String sql2 = "DELETE FROM livro WHERE id = ?";
+        
+        try{
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url,user,senha);
+            
+            ps = conn.prepareStatement(sql2);
+            ps.setInt(1, id);
+             
+            ps.executeUpdate();
+            System.out.println("Dados excluidos");
+            ps.close();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Livro Excluido com sucesso", "Exclusao de livros", 1);
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        
+        
+    }
+    
+    public void alterarL(Livro livro){
+        
+    }
 }

@@ -5,6 +5,7 @@
 package View;
 import Model.Emprestimo;
 import Model.Livro;
+import Controller.LivroDAO;
 import javax.swing.JOptionPane;
 
 /**
@@ -138,8 +139,22 @@ public class EmprestimoGUI extends javax.swing.JFrame {
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         Emprestimo emprestimo  = new Emprestimo();
         emprestimo.setId(Integer.parseInt(textIdEmp.getText()));
-        emprestimo.setDataEmprestimo(Integer.parseInt(textDate.getText()));
-        //achar livro pelo Id
+        emprestimo.setDia(Integer.parseInt(textDate.getText()));
+        emprestimo.setMes(Integer.parseInt(textDate.getText()));
+        emprestimo.setAno(Integer.parseInt(textDate.getText()));
+        
+        boolean livroExiste = false;
+        LivroDAO ld = new LivroDAO();
+        livroExiste = ld.buscarL(Integer.parseInt(textIdLivro.getText()));
+        if(livroExiste = true){
+            Livro livro = new Livro();
+            emprestimo.setLivro(livro);
+            emprestimo.getLivro().setId(Integer.parseInt(textIdLivro.getText()));
+        } else {
+            JOptionPane.showMessageDialog(
+                null, "Livro não cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);          
+        }
+//achar livro pelo Id
         //achar Usuario pelo rg
         //Inserir
          JOptionPane.showMessageDialog(
