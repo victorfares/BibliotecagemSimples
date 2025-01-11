@@ -35,14 +35,15 @@ public class LivroDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                System.out.println("Nome do Livro ="+rs.getString(2));
+                System.out.println("Nome do Livro = "+rs.getString(2));
                 ps.close();
                 rs.close();
                 conn.close();
                 return true;
                 
             }else{
-                System.out.println("Livro nao encontrado");
+                JOptionPane.showMessageDialog(
+                    null, "Livro não cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE); 
                 ps.close();
                 rs.close();
                 conn.close();            
@@ -62,7 +63,7 @@ public class LivroDAO {
         PreparedStatement ps = null;
         
        
-        String sql1 = "INSERT INTO Livro (Liv_id, Liv_nome, Liv_anoLancamento, Liv_genero, Liv_autor, Liv_edicao, Liv_editora, Liv_alugado) "
+        String sql1 = "INSERT INTO livro (Liv_id, Liv_nome, Liv_anoLancamento, Liv_genero, Liv_autor, Liv_edicao, Liv_editora, Liv_alugado) "
            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try{
             Class.forName(driver);
@@ -93,7 +94,7 @@ public class LivroDAO {
         Statement st = null;
         PreparedStatement ps = null;
         
-        String sql2 = "DELETE FROM livro WHERE id = ?";
+        String sql2 = "DELETE FROM livro WHERE Liv_id = ?";
         
         try{
             Class.forName(driver);

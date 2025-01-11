@@ -5,7 +5,11 @@
 package View;
 import Model.Emprestimo;
 import Model.Livro;
+import Model.Usuario;
+import Controller.EmprestimoDAO;
 import Controller.LivroDAO;
+import Controller.UsuarioDAO;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -13,7 +17,8 @@ import javax.swing.JOptionPane;
  * @author Victor
  */
 public class EmprestimoGUI extends javax.swing.JFrame {
-
+    EmprestimoDAO ed = new EmprestimoDAO();
+    UsuarioDAO ud = new UsuarioDAO();
     /**
      * Creates new form EmprestimoGUI
      */
@@ -37,9 +42,13 @@ public class EmprestimoGUI extends javax.swing.JFrame {
         textIdLivro = new javax.swing.JTextField();
         textIdUser = new javax.swing.JTextField();
         textIdEmp = new javax.swing.JTextField();
-        textDate = new javax.swing.JTextField();
+        textDia = new javax.swing.JTextField();
         btCadastrar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        textMes = new javax.swing.JTextField();
+        textAno = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Empréstimo");
@@ -52,9 +61,9 @@ public class EmprestimoGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Dia que foi realizado o empréstimo");
 
-        textDate.addActionListener(new java.awt.event.ActionListener() {
+        textDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textDateActionPerformed(evt);
+                textDiaActionPerformed(evt);
             }
         });
 
@@ -72,6 +81,10 @@ public class EmprestimoGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Mes que foi realizado o empréstimo");
+
+        jLabel6.setText("Ano que foi realizado o empréstimo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,11 +92,6 @@ public class EmprestimoGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textDate, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -102,7 +110,24 @@ public class EmprestimoGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btCadastrar)
                             .addComponent(jButton1))
-                        .addGap(51, 51, 51))))
+                        .addGap(51, 51, 51))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textDia, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(15, 15, 15)
+                                .addComponent(textMes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textAno, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,23 +150,49 @@ public class EmprestimoGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(textDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(151, Short.MAX_VALUE))
+                    .addComponent(textDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(textMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(textAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textDateActionPerformed
+    private void textDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textDiaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textDateActionPerformed
+    }//GEN-LAST:event_textDiaActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         Emprestimo emprestimo  = new Emprestimo();
         emprestimo.setId(Integer.parseInt(textIdEmp.getText()));
-        emprestimo.setDia(Integer.parseInt(textDate.getText()));
-        emprestimo.setMes(Integer.parseInt(textDate.getText()));
-        emprestimo.setAno(Integer.parseInt(textDate.getText()));
+        emprestimo.setDia(Integer.parseInt(textDia.getText()));
+        emprestimo.setMes(Integer.parseInt(textMes.getText()));
+        emprestimo.setAno(Integer.parseInt(textAno.getText()));
+        Usuario user = new Usuario();
+        emprestimo.setUsuario(user);
+        boolean usuarioExiste = false;
+        usuarioExiste = ud.buscarU(Integer.parseInt(textIdUser.getText()));
+        
+        if(usuarioExiste = true){
+            Usuario usuario = new Usuario();
+            emprestimo.setUsuario(usuario);
+            emprestimo.getUsuario().setRg(Integer.parseInt(textIdUser.getText()));
+        } else {
+            JOptionPane.showMessageDialog(
+                null, "Usuario não cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);          
+        }
+        
+        
+        emprestimo.getUsuario().setRg(Integer.parseInt(textIdUser.getText()));
+        
+        
         
         boolean livroExiste = false;
         LivroDAO ld = new LivroDAO();
@@ -157,8 +208,9 @@ public class EmprestimoGUI extends javax.swing.JFrame {
 //achar livro pelo Id
         //achar Usuario pelo rg
         //Inserir
-         JOptionPane.showMessageDialog(
-                null, "Empréstimo cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
+        ed.inserirE(emprestimo);
+
+         
          limpar();
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -170,7 +222,7 @@ public class EmprestimoGUI extends javax.swing.JFrame {
         textIdEmp.setText("");
         textIdUser.setText("");
         textIdLivro.setText("");
-        textDate.setText("");
+        textDia.setText("");
         textIdEmp.requestFocus();
     }
     
@@ -216,9 +268,13 @@ public class EmprestimoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField textDate;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField textAno;
+    private javax.swing.JTextField textDia;
     private javax.swing.JTextField textIdEmp;
     private javax.swing.JTextField textIdLivro;
     private javax.swing.JTextField textIdUser;
+    private javax.swing.JTextField textMes;
     // End of variables declaration//GEN-END:variables
 }

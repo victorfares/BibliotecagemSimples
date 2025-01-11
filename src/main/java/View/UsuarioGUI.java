@@ -5,6 +5,7 @@
 package View;
 import Model.Usuario;
 import javax.swing.JOptionPane;
+import Controller.UsuarioDAO;
 
 /**
  *
@@ -15,6 +16,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
     /**
      * Creates new form UsuarioGUI
      */
+    UsuarioDAO ud = new UsuarioDAO();
     public UsuarioGUI() {
         initComponents();
     }
@@ -34,6 +36,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         textRg = new javax.swing.JTextField();
         btCadastrar = new javax.swing.JButton();
         btLimpar = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -55,6 +58,13 @@ public class UsuarioGUI extends javax.swing.JFrame {
             }
         });
 
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,6 +82,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
                         .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btExcluir)
                     .addComponent(btCadastrar)
                     .addComponent(btLimpar))
                 .addContainerGap(101, Short.MAX_VALUE))
@@ -94,16 +105,22 @@ public class UsuarioGUI extends javax.swing.JFrame {
                         .addComponent(btCadastrar)
                         .addGap(18, 18, 18)
                         .addComponent(btLimpar)))
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btExcluir)
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
+
         Usuario usuario = new Usuario();
         usuario.setNome(textNome.getText());
         usuario.setRg(Integer.parseInt(textRg.getText()));
+        ud.inserirU(usuario);
+        
+        
         JOptionPane.showMessageDialog(
                 null, "Usuario Cadastrado", "Cadastro de Usuarios", JOptionPane.INFORMATION_MESSAGE);
         limpar();
@@ -113,6 +130,12 @@ public class UsuarioGUI extends javax.swing.JFrame {
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
         limpar();
     }//GEN-LAST:event_btLimparActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+       int rg = Integer.parseInt(textRg.getText());
+       ud.ExcluirU(rg);
+       
+    }//GEN-LAST:event_btExcluirActionPerformed
 
     public void limpar(){
         textNome.setText("");
@@ -157,6 +180,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btLimpar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
