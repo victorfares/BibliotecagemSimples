@@ -96,4 +96,26 @@ public class UsuarioDAO {
         return false;
     }
     
+    public void alterarU(Usuario us){
+        PreparedStatement ps = null;
+        
+        String sql = "UPDATE usuario SET Us_nome = ? WHERE Us_rg = ?";
+        
+        try{
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url,user,senha);
+            ps = conn.prepareStatement(sql);
+            
+            ps.setString(1, us.getNome());
+            ps.setInt(2, us.getRg());
+            
+            ps.executeUpdate();
+            System.out.println("Dados alterados");
+            ps.close();
+            conn.close();
+        }catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
+    
 }

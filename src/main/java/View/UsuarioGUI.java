@@ -37,6 +37,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         btCadastrar = new javax.swing.JButton();
         btLimpar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,6 +66,13 @@ public class UsuarioGUI extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Alterar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,6 +90,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
                         .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
                     .addComponent(btExcluir)
                     .addComponent(btCadastrar)
                     .addComponent(btLimpar))
@@ -107,7 +116,9 @@ public class UsuarioGUI extends javax.swing.JFrame {
                         .addComponent(btLimpar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btExcluir)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,6 +147,18 @@ public class UsuarioGUI extends javax.swing.JFrame {
        ud.ExcluirU(rg);
        
     }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Usuario usuario = new Usuario();
+        usuario.setNome(textNome.getText());
+        usuario.setRg(Integer.parseInt(textRg.getText()));
+        ud.alterarU(usuario);
+        
+        
+        JOptionPane.showMessageDialog(
+                null, "Usuario Alterado", "Cadastro de Usuarios", JOptionPane.INFORMATION_MESSAGE);
+        limpar();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void limpar(){
         textNome.setText("");
@@ -182,6 +205,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
     private javax.swing.JButton btCadastrar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btLimpar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField textNome;

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 public class EmprestimoDAO {
@@ -87,7 +89,7 @@ public class EmprestimoDAO {
                 ps.setInt(1, emp.getLivro().getId());
 
                 ps.executeUpdate();
-                System.out.println("Dados inseridos com sucesso!");
+                System.out.println("Livro consta como alugado");
                 ps.close();
                 conn.close();
                 JOptionPane.showMessageDialog(
@@ -102,8 +104,9 @@ public class EmprestimoDAO {
     }
     
     
-    public void excluirE(int id){
+    public void excluirE(int ide, int idl){
         PreparedStatement ps = null;
+        
         
         String sql2 = "DELETE FROM emprestimo WHERE Emp_id = ?";
         
@@ -112,14 +115,32 @@ public class EmprestimoDAO {
             conn = DriverManager.getConnection(url,user,senha);
             
             ps = conn.prepareStatement(sql2);
-            ps.setInt(1, id);
+            ps.setInt(1, ide);
             
             ps.executeUpdate();
             System.out.println("Dados excluidos");
             ps.close();
             conn.close();
-            JOptionPane.showMessageDialog(null, "Usuario Excluido com sucesso", "Exclusao de usuarios", 1);
+            JOptionPane.showMessageDialog(null, "Emprestumo Excluido com sucesso", "Exclusao de emprestimos", 1);
             
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        
+        String sql3 = "UPDATE livro SET Liv_alugado = FALSE WHERE Liv_id = ?";
+        try{
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url,user,senha);
+
+            ps = conn.prepareStatement(sql3);
+            ps.setInt(1, idl);
+
+            ps.executeUpdate();
+            System.out.println("Livro não consta mais como alugado.");
+            ps.close();
+            conn.close();
+            JOptionPane.showMessageDialog(
+                null, "Operação realizada", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
         }catch(Exception ex){
             System.out.println(ex);
         }
@@ -127,23 +148,31 @@ public class EmprestimoDAO {
         
     }
     
-    public void atualizarE(Emprestimo emp){
-        PreparedStatement ps = null;
-        
-        String sql3 = "UPDATE livro SET Liv_alugado = FALSE WHERE Liv_id = ?";
+    public List<Object[]> buscarEmprestimos(){
+        List<Object[]> emprestimos = new ArrayList<>();
         try{
-            Class.forName(driver);
             conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Emp_id, Liv_id, Us_rg, Emp_dia, Emp_mes,Emp_ano FROM emprestimo";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             
-            ps = conn.prepareStatement(sql3);
-            ps.setInt(1, emp.getLivro().getId());
+            while(rs.next()){
+                int id = rs.getInt("Emp_id");
+                int idL = rs.getInt("Liv_id");
+                int rg = rs.getInt("Us_rg");
+                int dia = rs.getInt("Emp_dia");
+                int mes = rs.getInt("Emp_mes");
+                int ano = rs.getInt("Emp_ano");
+                emprestimos.add(new Object[]{id, idL, rg, dia, mes, ano});
+            }
             
-            ps.executeUpdate();
-            System.out.println("Dados inseridos com sucesso!");
-            ps.close();
             conn.close();
+            ps.close();
+            rs.close();
+            
         }catch(Exception ex){
             System.out.println(ex);
         }
+        return emprestimos;
     }
 }
