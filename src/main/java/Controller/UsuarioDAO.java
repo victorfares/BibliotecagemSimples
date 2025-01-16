@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
@@ -116,6 +118,30 @@ public class UsuarioDAO {
         }catch(Exception ex) {
             System.out.println(ex);
         }
+    }
+    
+    public List<Object[]> buscarUsuarios(){
+        List<Object[]> usur = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Us_nome,Us_rg FROM usuario";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                String nome = rs.getString("Us_nome");        
+                int id = rs.getInt("Us_rg");
+                usur.add(new Object[]{nome, id});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return usur;
     }
     
 }

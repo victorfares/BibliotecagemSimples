@@ -31,6 +31,10 @@ public class Principal extends javax.swing.JFrame {
         itOpenLivros = new javax.swing.JMenuItem();
         itOpenUser = new javax.swing.JMenuItem();
         itOpenEmp = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        itOpenRelEmp = new javax.swing.JMenuItem();
+        itOpenRelLiv = new javax.swing.JMenuItem();
+        itOpenRelUs = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +67,34 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(itOpenEmp);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Relatórios");
+
+        itOpenRelEmp.setText("Relatório de Empreéstimos");
+        itOpenRelEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itOpenRelEmpActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itOpenRelEmp);
+
+        itOpenRelLiv.setText("Relatório de Livro");
+        itOpenRelLiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itOpenRelLivActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itOpenRelLiv);
+
+        itOpenRelUs.setText("Relatorio de Usuários");
+        itOpenRelUs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itOpenRelUsActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itOpenRelUs);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -102,6 +134,21 @@ public class Principal extends javax.swing.JFrame {
         eg.setVisible(true);
     }//GEN-LAST:event_itOpenEmpActionPerformed
 
+    private void itOpenRelEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itOpenRelEmpActionPerformed
+        EmprestimoTable et = new EmprestimoTable();
+        et.setVisible(true);
+    }//GEN-LAST:event_itOpenRelEmpActionPerformed
+
+    private void itOpenRelLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itOpenRelLivActionPerformed
+        LivroTable lt = new LivroTable();
+        lt.setVisible(true);
+    }//GEN-LAST:event_itOpenRelLivActionPerformed
+
+    private void itOpenRelUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itOpenRelUsActionPerformed
+        UsuarioTable ut = new UsuarioTable();
+        ut.setVisible(true);
+    }//GEN-LAST:event_itOpenRelUsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -140,9 +187,13 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem itOpenEmp;
     private javax.swing.JMenuItem itOpenLivros;
+    private javax.swing.JMenuItem itOpenRelEmp;
+    private javax.swing.JMenuItem itOpenRelLiv;
+    private javax.swing.JMenuItem itOpenRelUs;
     private javax.swing.JMenuItem itOpenUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }

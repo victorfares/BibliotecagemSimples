@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -115,7 +117,33 @@ public class LivroDAO {
         
     }
     
-    public void alterarL(Livro livro){
-        
+     public List<Object[]> buscarLivros(){
+        List<Object[]> livros = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Liv_id, Liv_nome, Liv_genero, Liv_edicao, Liv_editora, Liv_anoLancamento, Liv_autor, Liv_alugado FROM livro";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Liv_id");
+                String nome = rs.getString("Liv_nome");        
+                String gen = rs.getString("Liv_genero");
+                int ed = rs.getInt("Liv_edicao");
+                String edt = rs.getString("Liv_editora");
+                int anoL = rs.getInt("Liv_anoLancamento");
+                String aut = rs.getString("Liv_autor");
+                boolean alu = rs.getBoolean("Liv_alugado");
+                livros.add(new Object[]{id, nome, gen, ed, edt, anoL, aut, alu});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return livros;
     }
 }
