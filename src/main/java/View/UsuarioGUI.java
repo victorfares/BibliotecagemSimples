@@ -132,8 +132,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         ud.inserirU(usuario);
         
         
-        JOptionPane.showMessageDialog(
-                null, "Usuario Cadastrado", "Cadastro de Usuarios", JOptionPane.INFORMATION_MESSAGE);
+        
         limpar();
         
     }//GEN-LAST:event_btCadastrarActionPerformed

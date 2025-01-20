@@ -190,8 +190,6 @@ public class LivroGUI extends javax.swing.JFrame {
         ld.inserirL(livro);
         
         
-        JOptionPane.showMessageDialog(
-                null, "Livro cadastrado", "Cadastro de livros", JOptionPane.INFORMATION_MESSAGE);
         //LivroDao dao - new Liv//roDao;
         //dao.inserir(livro);
         limpar();

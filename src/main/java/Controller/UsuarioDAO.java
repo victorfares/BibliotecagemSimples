@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Exception.UsuarioExisteException;
 import Model.Usuario;
 
 import java.sql.Connection;
@@ -22,6 +23,33 @@ public class UsuarioDAO {
     static String user = "root";
     static String senha = "2004Gu$tavo";
     
+    
+        public void buscarRgUser(int id) throws UsuarioExisteException{
+        String sql3 = "SELECT COUNT(*) FROM usuario WHERE Us_rg = ?";
+
+        try{
+            conn = DriverManager.getConnection(url, user, senha);
+            PreparedStatement ps = conn.prepareStatement(sql3);
+
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+
+        if (rs.next()) {
+            int count = rs.getInt(1); 
+            if (count > 0) {
+                throw new UsuarioExisteException(); 
+            }
+        }
+            ps.close();
+            rs.close();
+            
+        }catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+    }    
+    
     public void inserirU(Usuario us){
         PreparedStatement ps = null;
         
@@ -29,19 +57,32 @@ public class UsuarioDAO {
         try{
             Class.forName(driver);
             conn = DriverManager.getConnection(url,user,senha);
-            System.out.println("Inserindo dados...");
+            buscarRgUser(us.getRg());
             
             ps = conn.prepareStatement(sql1);
             ps.setInt(1, us.getRg());
             ps.setString(2, us.getNome());
             
             ps.executeUpdate();
-            System.out.println("Dados inseridos com sucesso!");
+            JOptionPane.showMessageDialog(
+                null, "Usuario Cadastrado", "Cadastro de Usuarios", JOptionPane.INFORMATION_MESSAGE);
             ps.close();
             conn.close();
         }catch(Exception ex){
             System.out.println(ex);
+        } finally{
+             try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+        } catch (Exception ex) {
+            System.out.println("Erro ao fechar recursos: " + ex.getMessage());
         }
+        }   
+        
     }
     
     public void ExcluirU(int rg){
@@ -142,6 +183,10 @@ public class UsuarioDAO {
             System.out.println(ex);
         }
         return usur;
+    }
+    
+    public void selecionarU(){
+        
     }
     
 }

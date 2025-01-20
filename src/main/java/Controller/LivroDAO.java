@@ -5,6 +5,7 @@
 package Controller;
 
 
+import Exception.LivroExisteException;
 import Model.Livro;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -56,7 +57,33 @@ public class LivroDAO {
 
         return false;
     }
-    
+ 
+    public void buscarIdLiv(int id) throws LivroExisteException{
+        Livro livro = null;
+        String sql3 = "SELECT COUNT(*) FROM livro WHERE Liv_id = ?";
+
+        try{
+            conn = DriverManager.getConnection(url, user, senha);
+            PreparedStatement ps1 = conn.prepareStatement(sql3);
+
+            ps1.setInt(1, id);
+            ResultSet rs1 = ps1.executeQuery();
+            
+
+            if (rs1.next()) {
+                int count = rs1.getInt(1);  
+                if (count > 0) {
+                    throw new LivroExisteException("Já existe livro com este ID cadastrado");
+                } 
+            }
+            ps1.close();
+            rs1.close();
+            
+        }catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+    }    
     
     
 
@@ -71,7 +98,7 @@ public class LivroDAO {
             Class.forName(driver);
             conn = DriverManager.getConnection(url,user,senha);
             System.out.println("Inserindo dados...");
-            
+            buscarIdLiv(livro.getId());
             ps = conn.prepareStatement(sql1);
             ps.setInt(1, livro.getId());
             ps.setString(2, livro.getNome());
@@ -84,11 +111,23 @@ public class LivroDAO {
             
            
             ps.executeUpdate();
-            System.out.println("Dados inseridos com sucesso!");
+            JOptionPane.showMessageDialog(
+                null, "Livro cadastrado", "Cadastro de livros", JOptionPane.INFORMATION_MESSAGE);
             ps.close();
             conn.close();
         }catch(Exception ex){
             System.out.println(ex);
+        }finally{
+             try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Erro ao fechar recursos: " + ex.getMessage());
+            }
         }
     }
     
@@ -146,4 +185,64 @@ public class LivroDAO {
         }
         return livros;
     }
+     
+     public List<Object[]> selecionarLivroAlugados(){
+        List<Object[]> livros = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Liv_id, Liv_nome, Liv_genero, Liv_edicao, Liv_editora, Liv_anoLancamento, Liv_autor, Liv_alugado FROM livro WHERE Liv_alugado = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Liv_id");
+                String nome = rs.getString("Liv_nome");        
+                String gen = rs.getString("Liv_genero");
+                int ed = rs.getInt("Liv_edicao");
+                String edt = rs.getString("Liv_editora");
+                int anoL = rs.getInt("Liv_anoLancamento");
+                String aut = rs.getString("Liv_autor");
+                boolean alu = rs.getBoolean("Liv_alugado");
+                livros.add(new Object[]{id, nome, gen, ed, edt, anoL, aut, alu});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return livros;
+     }
+     
+     public List<Object[]> selecionarLivDisp(){
+        List<Object[]> livros = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Liv_id, Liv_nome, Liv_genero, Liv_edicao, Liv_editora, Liv_anoLancamento, Liv_autor, Liv_alugado FROM livro WHERE Liv_alugado = FALSE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Liv_id");
+                String nome = rs.getString("Liv_nome");        
+                String gen = rs.getString("Liv_genero");
+                int ed = rs.getInt("Liv_edicao");
+                String edt = rs.getString("Liv_editora");
+                int anoL = rs.getInt("Liv_anoLancamento");
+                String aut = rs.getString("Liv_autor");
+                boolean alu = rs.getBoolean("Liv_alugado");
+                livros.add(new Object[]{id, nome, gen, ed, edt, anoL, aut, alu});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return livros;
+     }
 }

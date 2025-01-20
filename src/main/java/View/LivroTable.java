@@ -18,6 +18,7 @@ public class LivroTable extends javax.swing.JFrame {
     /**
      * Creates new form LivroTable
      */
+    LivroDAO ld = new LivroDAO(); 
     public LivroTable() {
         initComponents();
         popularTabela();
@@ -34,8 +35,12 @@ public class LivroTable extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tableLiv = new javax.swing.JTable();
+        btLivAlu = new javax.swing.JButton();
+        btTodosLiv = new javax.swing.JButton();
+        btLivDisp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tabela de Livros");
 
         tableLiv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -50,24 +55,84 @@ public class LivroTable extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableLiv);
 
+        btLivAlu.setText("Mostrar Livros Alugados");
+        btLivAlu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLivAluActionPerformed(evt);
+            }
+        });
+
+        btTodosLiv.setText("Mostrar Todos os Livros");
+        btTodosLiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTodosLivActionPerformed(evt);
+            }
+        });
+
+        btLivDisp.setText("Mostrar Livros não alugados");
+        btLivDisp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLivDispActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btTodosLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btLivAlu)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btLivDisp))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btLivAlu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btTodosLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLivDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btTodosLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTodosLivActionPerformed
+        popularTabela();
+    }//GEN-LAST:event_btTodosLivActionPerformed
+
+    private void btLivAluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLivAluActionPerformed
+        List<Object[]> livros = ld.selecionarLivroAlugados(); 
+        DefaultTableModel modeloTabela = (DefaultTableModel) tableLiv.getModel();
+        modeloTabela.setRowCount(0);
+
+        // Adicionando os dados ao modelo
+        for (Object[] livro : livros) {
+            modeloTabela.addRow(livro);
+        }
+    }//GEN-LAST:event_btLivAluActionPerformed
+
+    private void btLivDispActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLivDispActionPerformed
+        List<Object[]> livros = ld.selecionarLivDisp(); 
+        DefaultTableModel modeloTabela = (DefaultTableModel) tableLiv.getModel();
+        modeloTabela.setRowCount(0);
+
+        // Adicionando os dados ao modelo
+        for (Object[] livro : livros) {
+            modeloTabela.addRow(livro);
+        }
+    }//GEN-LAST:event_btLivDispActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,7 +170,6 @@ public class LivroTable extends javax.swing.JFrame {
     }
     
         public void popularTabela(){
-        LivroDAO ld = new LivroDAO(); 
         List<Object[]> livros = ld.buscarLivros(); 
         DefaultTableModel modeloTabela = (DefaultTableModel) tableLiv.getModel();
         modeloTabela.setRowCount(0);
@@ -118,6 +182,9 @@ public class LivroTable extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btLivAlu;
+    private javax.swing.JButton btLivDisp;
+    private javax.swing.JButton btTodosLiv;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableLiv;
     // End of variables declaration//GEN-END:variables
