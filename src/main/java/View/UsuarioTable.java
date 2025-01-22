@@ -44,7 +44,7 @@ public class UsuarioTable extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "RG", "Nome"
+                "Nome", "RG"
             }
         ));
         jScrollPane1.setViewportView(tableRelUs);

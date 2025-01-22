@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class ConexaoBD {
     static Connection conn = null;
-    static String url = "jdbc:mysql://localhost:3306/mydb";
+    static String url = "jdbc:mysql://localhost:3306/biblioteca";
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
     static String senha = "2004Gu$tavo";

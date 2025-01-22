@@ -21,10 +21,10 @@ import javax.swing.JOptionPane;
 
 public class LivroDAO {
     static Connection conn = null;
-    static String url = "jdbc:mysql://localhost:3306/mydb";
+    static String url = "jdbc:mysql://localhost:3306/biblioteca";
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
-    static String senha = "2004Gu$tavo";
+    static String senha = "chips2002";
     
     public boolean buscarL(int id) {
         Livro livro = null;

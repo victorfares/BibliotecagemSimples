@@ -18,6 +18,8 @@ public class EmprestimoTable extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+    EmprestimoDAO ed = new EmprestimoDAO(); 
+            
     public EmprestimoTable() {
         initComponents();
         popularTabela();
@@ -36,6 +38,8 @@ public class EmprestimoTable extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableEmp = new javax.swing.JTable();
         btUpdate = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        btEmpUs = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -47,7 +51,7 @@ public class EmprestimoTable extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID ", "RG Usuario", "ID Livro", "Dia do Emprestimo", "Mes do Emprestimo", "Ano do Emprestimo"
+                "ID ", "ID Livro", "RG Usuario", "Dia do Emprestimo", "Mes do Emprestimo", "Ano do Emprestimo"
             }
         ));
         jScrollPane1.setViewportView(tableEmp);
@@ -59,26 +63,49 @@ public class EmprestimoTable extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        btEmpUs.setText("Buscar Empréstimos por RG de Usuário");
+        btEmpUs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEmpUsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 60, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(btUpdate)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btUpdate))
+                    .addComponent(btEmpUs))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btEmpUs))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(btUpdate)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -87,6 +114,14 @@ public class EmprestimoTable extends javax.swing.JFrame {
     private void btUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateActionPerformed
         popularTabela();
     }//GEN-LAST:event_btUpdateActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void btEmpUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEmpUsActionPerformed
+        EmprestimosUserTabela();
+    }//GEN-LAST:event_btEmpUsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,8 +160,18 @@ public class EmprestimoTable extends javax.swing.JFrame {
     }
 
     public void popularTabela(){
-        EmprestimoDAO ed = new EmprestimoDAO(); 
         List<Object[]> emprestimos = ed.buscarEmprestimos(); 
+        DefaultTableModel modeloTabela = (DefaultTableModel) tableEmp.getModel();
+        modeloTabela.setRowCount(0);
+
+        // Adicionando os dados ao modelo
+        for (Object[] emprestimo : emprestimos) {
+            modeloTabela.addRow(emprestimo);
+        }
+        
+    }
+    public void EmprestimosUserTabela(){
+        List<Object[]> emprestimos = ed.buscarEmprestimosUsuario(Integer.parseInt(jTextField1.getText())); 
         DefaultTableModel modeloTabela = (DefaultTableModel) tableEmp.getModel();
         modeloTabela.setRowCount(0);
 
@@ -138,8 +183,10 @@ public class EmprestimoTable extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btEmpUs;
     private javax.swing.JButton btUpdate;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tableEmp;
     // End of variables declaration//GEN-END:variables
 }

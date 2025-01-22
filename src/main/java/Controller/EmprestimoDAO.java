@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class EmprestimoDAO {
     static Connection conn = null;
-    static String url = "jdbc:mysql://localhost:3306/mydb";
+    static String url = "jdbc:mysql://localhost:3306/biblioteca";
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
-    static String senha = "2004Gu$tavo";
+    static String senha = "chips2002";
     
     public boolean checarAlugado(int id){
         PreparedStatement ps = null;
@@ -176,5 +176,33 @@ public class EmprestimoDAO {
         return emprestimos;
     }
     
-    
+    public List<Object[]> buscarEmprestimosUsuario(int usrg){
+        List<Object[]> emprestimos = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Emp_id, Liv_id, Us_rg, Emp_dia, Emp_mes,Emp_ano FROM emprestimo WHERE Us_rg = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, usrg);
+             System.out.println("Executando consulta com Us_rg = " + usrg);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Emp_id");
+                int idL = rs.getInt("Liv_id");
+                int rg = rs.getInt("Us_rg");
+                int dia = rs.getInt("Emp_dia");
+                int mes = rs.getInt("Emp_mes");
+                int ano = rs.getInt("Emp_ano");
+                emprestimos.add(new Object[]{id, idL, rg, dia, mes, ano});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return emprestimos;
+    }
 }

@@ -241,6 +241,8 @@ public class EmprestimoGUI extends javax.swing.JFrame {
         textIdUser.setText("");
         textIdLivro.setText("");
         textDia.setText("");
+        textMes.setText("");
+        textAno.setText("");
         textIdEmp.requestFocus();
     }
     
