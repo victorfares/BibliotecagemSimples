@@ -70,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Relatórios");
 
-        itOpenRelEmp.setText("Relatório de Empreéstimos");
+        itOpenRelEmp.setText("Relatório de Empréstimos");
         itOpenRelEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itOpenRelEmpActionPerformed(evt);

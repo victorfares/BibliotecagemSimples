@@ -18,10 +18,10 @@ import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
     static Connection conn = null;
-    static String url = "jdbc:mysql://localhost:3306/biblioteca";
+    static String url = "jdbc:mysql://localhost:3306/mydb";
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
-    static String senha = "chips2002";
+    static String senha = "2004Gu$tavo";
     
     
         public void buscarRgUser(int id) throws UsuarioExisteException{
@@ -128,6 +128,8 @@ public class UsuarioDAO {
                 
             }else{
                 System.out.println("Usuario nao encontrado");
+                JOptionPane.showMessageDialog(
+                    null, "Usuario não cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
                 ps.close();
                 rs.close();
                 conn.close();            

@@ -42,7 +42,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itOpenRelEmp">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Empre&#xe9;stimos"/>
+                <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Empr&#xe9;stimos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itOpenRelEmpActionPerformed"/>

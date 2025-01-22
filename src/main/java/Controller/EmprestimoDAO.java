@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class EmprestimoDAO {
     static Connection conn = null;
-    static String url = "jdbc:mysql://localhost:3306/biblioteca";
+    static String url = "jdbc:mysql://localhost:3306/mydb";
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
-    static String senha = "chips2002";
+    static String senha = "2004Gu$tavo";
     
     public boolean checarAlugado(int id){
         PreparedStatement ps = null;
@@ -52,6 +52,7 @@ public class EmprestimoDAO {
         Livro livro = new Livro();
         Usuario usuario = new Usuario();
         PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
         
         
         
@@ -72,33 +73,39 @@ public class EmprestimoDAO {
                 ps.setInt(5, emp.getMes());
                 ps.setInt(6, emp.getAno());
 
-                ps.executeUpdate();
-                System.out.println("Dados inseridos com sucesso!");
+                int mcc = ps.executeUpdate();
+                if(mcc > 0){
+                    System.out.println("Dados inseridos com sucesso!");
+                    String sql3 = "UPDATE livro SET Liv_alugado = TRUE WHERE Liv_id = ?";
+                    try{
+                        
+
+                        ps2 = conn.prepareStatement(sql3);
+                        ps2.setInt(1, emp.getLivro().getId());
+
+                        ps2.executeUpdate();
+                        System.out.println("Livro consta como alugado");
+                        ps2.close();
+                        
+                        JOptionPane.showMessageDialog(
+                            null, "Empréstimo cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
+                    }catch(Exception ex){
+                        System.out.println(ex);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar empréstimo, Verifique se Usuário e Livro existem", "Cadastro de emprestimos", 1);
+                }
+                
+                
                 ps.close();
                 conn.close();
             }catch(Exception ex){
                 System.out.println(ex);
             }
         
-            String sql3 = "UPDATE livro SET Liv_alugado = TRUE WHERE Liv_id = ?";
-            try{
-                Class.forName(driver);
-                conn = DriverManager.getConnection(url,user,senha);
-
-                ps = conn.prepareStatement(sql3);
-                ps.setInt(1, emp.getLivro().getId());
-
-                ps.executeUpdate();
-                System.out.println("Livro consta como alugado");
-                ps.close();
-                conn.close();
-                JOptionPane.showMessageDialog(
-                    null, "Empréstimo cadastrado", "Cadastro de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
-            }catch(Exception ex){
-                System.out.println(ex);
-            }
+            
         }else {
-            JOptionPane.showMessageDialog(null, "Livro ja esta alugado, nao é possivle fazer empretstimo", "Cadastro de Emprestimos", 1);
+            JOptionPane.showMessageDialog(null, "Livro ja esta alugado, nao é possivel fazer empréstimo", "Cadastro de Emprestimos", 1);
         }
         
     }
@@ -121,7 +128,7 @@ public class EmprestimoDAO {
             System.out.println("Dados excluidos");
             ps.close();
             conn.close();
-            JOptionPane.showMessageDialog(null, "Emprestumo Excluido com sucesso", "Exclusao de emprestimos", 1);
+            JOptionPane.showMessageDialog(null, "Empréstimo Excluido com sucesso", "Exclusao de emprestimos", 1);
             
         }catch(Exception ex){
             System.out.println(ex);
