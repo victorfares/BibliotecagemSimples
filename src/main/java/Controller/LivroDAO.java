@@ -21,10 +21,10 @@ import javax.swing.JOptionPane;
 
 public class LivroDAO {
     static Connection conn = null;
-    static String url = "jdbc:mysql://localhost:3306/mydb";
+    static String url = "jdbc:mysql://localhost:3306/biblioteca";
     static String driver = "com.mysql.cj.jdbc.Driver";
     static String user = "root";
-    static String senha = "2004Gu$tavo";
+    static String senha = "chips2002";
     
     public boolean buscarL(int id) {
         Livro livro = null;
@@ -245,4 +245,97 @@ public class LivroDAO {
         }
         return livros;
      }
+    public List<Object[]> selecionarLivGenero(String genS){
+        List<Object[]> livros = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Liv_id, Liv_nome, Liv_genero, Liv_edicao, Liv_editora, Liv_anoLancamento, Liv_autor, Liv_alugado FROM livro WHERE Liv_genero = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, genS);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Liv_id");
+                String nome = rs.getString("Liv_nome");        
+                String gen = rs.getString("Liv_genero");
+                int ed = rs.getInt("Liv_edicao");
+                String edt = rs.getString("Liv_editora");
+                int anoL = rs.getInt("Liv_anoLancamento");
+                String aut = rs.getString("Liv_autor");
+                boolean alu = rs.getBoolean("Liv_alugado");
+                livros.add(new Object[]{id, nome, gen, ed, edt, anoL, aut, alu});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return livros;
+     }     
+ 
+   public List<Object[]> selecionarLivAutor(String autor){
+        List<Object[]> livros = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Liv_id, Liv_nome, Liv_genero, Liv_edicao, Liv_editora, Liv_anoLancamento, Liv_autor, Liv_alugado FROM livro WHERE Liv_autor = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, autor);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Liv_id");
+                String nome = rs.getString("Liv_nome");        
+                String gen = rs.getString("Liv_genero");
+                int ed = rs.getInt("Liv_edicao");
+                String edt = rs.getString("Liv_editora");
+                int anoL = rs.getInt("Liv_anoLancamento");
+                String aut = rs.getString("Liv_autor");
+                boolean alu = rs.getBoolean("Liv_alugado");
+                livros.add(new Object[]{id, nome, gen, ed, edt, anoL, aut, alu});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return livros;
+     }   
+    
+   public List<Object[]> selecionarLivNome(String titulo){
+        List<Object[]> livros = new ArrayList<>();
+        try{
+            conn = DriverManager.getConnection(url,user,senha);
+            String sql = "SELECT Liv_id, Liv_nome, Liv_genero, Liv_edicao, Liv_editora, Liv_anoLancamento, Liv_autor, Liv_alugado FROM livro WHERE Liv_nome = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, titulo);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("Liv_id");
+                String nome = rs.getString("Liv_nome");        
+                String gen = rs.getString("Liv_genero");
+                int ed = rs.getInt("Liv_edicao");
+                String edt = rs.getString("Liv_editora");
+                int anoL = rs.getInt("Liv_anoLancamento");
+                String aut = rs.getString("Liv_autor");
+                boolean alu = rs.getBoolean("Liv_alugado");
+                livros.add(new Object[]{id, nome, gen, ed, edt, anoL, aut, alu});
+            }
+            
+            conn.close();
+            ps.close();
+            rs.close();
+            
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return livros;
+     }   
+   
 }

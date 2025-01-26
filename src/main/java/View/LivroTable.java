@@ -38,6 +38,10 @@ public class LivroTable extends javax.swing.JFrame {
         btLivAlu = new javax.swing.JButton();
         btTodosLiv = new javax.swing.JButton();
         btLivDisp = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        btLivGen = new javax.swing.JButton();
+        btLivAut = new javax.swing.JButton();
+        btLivNome = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tabela de Livros");
@@ -50,7 +54,7 @@ public class LivroTable extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Autor", "Edição", "Editora", "Ano de Lançamento", "Gênero", "Está Alugado"
+                "ID", "Nome", "Gênero", "Edição", "Editora", "Ano de Lançamento", "Autor", "Está Alugado"
             }
         ));
         jScrollPane1.setViewportView(tableLiv);
@@ -76,6 +80,27 @@ public class LivroTable extends javax.swing.JFrame {
             }
         });
 
+        btLivGen.setText("Pesquisar por Genêro");
+        btLivGen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLivGenActionPerformed(evt);
+            }
+        });
+
+        btLivAut.setText("Pesquisar por Autor");
+        btLivAut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLivAutActionPerformed(evt);
+            }
+        });
+
+        btLivNome.setText("Pesquisar por Nome");
+        btLivNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLivNomeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,26 +109,43 @@ public class LivroTable extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btLivGen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btLivAut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btLivNome))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btTodosLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(33, 33, 33)
                         .addComponent(btLivAlu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btLivDisp))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btLivDisp)
+                        .addGap(62, 62, 62))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btLivDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btLivAlu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btTodosLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(44, 44, 44)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLivGen)
+                    .addComponent(btLivAut)
+                    .addComponent(btLivNome))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btTodosLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLivAlu, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLivDisp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8))
         );
 
         pack();
@@ -134,6 +176,39 @@ public class LivroTable extends javax.swing.JFrame {
             modeloTabela.addRow(livro);
         }
     }//GEN-LAST:event_btLivDispActionPerformed
+
+    private void btLivGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLivGenActionPerformed
+        List<Object[]> livros = ld.selecionarLivGenero(jTextField1.getText()); 
+        DefaultTableModel modeloTabela = (DefaultTableModel) tableLiv.getModel();
+        modeloTabela.setRowCount(0);
+
+        // Adicionando os dados ao modelo
+        for (Object[] livro : livros) {
+            modeloTabela.addRow(livro);
+        }
+    }//GEN-LAST:event_btLivGenActionPerformed
+
+    private void btLivAutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLivAutActionPerformed
+        List<Object[]> livros = ld.selecionarLivAutor(jTextField1.getText()); 
+        DefaultTableModel modeloTabela = (DefaultTableModel) tableLiv.getModel();
+        modeloTabela.setRowCount(0);
+
+        // Adicionando os dados ao modelo
+        for (Object[] livro : livros) {
+            modeloTabela.addRow(livro);
+        }
+    }//GEN-LAST:event_btLivAutActionPerformed
+
+    private void btLivNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLivNomeActionPerformed
+        List<Object[]> livros = ld.selecionarLivNome(jTextField1.getText()); 
+        DefaultTableModel modeloTabela = (DefaultTableModel) tableLiv.getModel();
+        modeloTabela.setRowCount(0);
+
+        // Adicionando os dados ao modelo
+        for (Object[] livro : livros) {
+            modeloTabela.addRow(livro);
+        }
+    }//GEN-LAST:event_btLivNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,9 +259,13 @@ public class LivroTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btLivAlu;
+    private javax.swing.JButton btLivAut;
     private javax.swing.JButton btLivDisp;
+    private javax.swing.JButton btLivGen;
+    private javax.swing.JButton btLivNome;
     private javax.swing.JButton btTodosLiv;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tableLiv;
     // End of variables declaration//GEN-END:variables
 }
